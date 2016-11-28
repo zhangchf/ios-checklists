@@ -65,10 +65,12 @@ class ChecklistViewController: UITableViewController, AddItemViewControllerProto
     
     // MARK: private methods
     func configureCheckmark(for cell: UITableViewCell, with item: ChecklistItem) {
+        let checkLabel = cell.viewWithTag(1001) as! UILabel
+        
         if item.checked {
-            cell.accessoryType = .checkmark
+            checkLabel.text = "✔︎"
         } else {
-            cell.accessoryType = .none
+            checkLabel.text = ""
         }
     }
     
@@ -90,11 +92,27 @@ class ChecklistViewController: UITableViewController, AddItemViewControllerProto
         dismiss(animated: true, completion: nil)
     }
     
+    func addItemViewController(_ controller: AddItemViewController, didFinishEditing item: ChecklistItem) {
+        if let index = items.index(of: item) {
+            let indexPath = IndexPath(row: index, section: 0)
+            if let cell = tableView.cellForRow(at: indexPath) {
+                configureText(for: cell, with: item)
+            }
+        }
+    }
+    
     //MARK: - Prepare for segue
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "AddItem" {
             let navigationController = segue.destination as! UINavigationController
             let controller = navigationController.topViewController as! AddItemViewController
+            controller.delegate = self
+        } else if segue.identifier == "EditItem" {
+            let navigationController = segue.destination as! UINavigationController
+            let controller = navigationController.topViewController as! AddItemViewController
+            if let indexPath = tableView.indexPath(for: sender as! UITableViewCell) {
+                controller.itemToEdit = items[indexPath.row]
+            }
             controller.delegate = self
         }
     }

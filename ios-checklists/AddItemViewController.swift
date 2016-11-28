@@ -11,6 +11,7 @@ import UIKit
 protocol AddItemViewControllerProtocol: class {
     func addItemViewControllerDidCancel(_ controller: AddItemViewController)
     func addItemViewController(_ controller: AddItemViewController, didFinishAdding item: ChecklistItem)
+    func addItemViewController(_ controller: AddItemViewController, didFinishEditing item: ChecklistItem)
 }
 
 class AddItemViewController : UITableViewController, UITextFieldDelegate {
@@ -20,6 +21,8 @@ class AddItemViewController : UITableViewController, UITextFieldDelegate {
     
     weak var delegate: AddItemViewControllerProtocol?
     
+    var itemToEdit: ChecklistItem?
+    
 
     @IBAction func cancel() {
         delegate?.addItemViewControllerDidCancel(self)
@@ -27,11 +30,23 @@ class AddItemViewController : UITableViewController, UITextFieldDelegate {
     
     @IBAction func done() {
         print("text field: \(textField.text!)")
-        delegate?.addItemViewController(self, didFinishAdding: ChecklistItem(text: textField.text!, checked: false))
+        if let editItem = itemToEdit {
+            editItem.text = textField.text!
+            delegate?.addItemViewController(self, didFinishEditing: editItem)
+        } else {
+            delegate?.addItemViewController(self, didFinishAdding: ChecklistItem(text: textField.text!, checked: false))
+        }
     }
     
     override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
         return nil
+    }
+    
+    override func viewDidLoad() {
+        if let item = itemToEdit {
+            title = "Edit Item"
+            textField.text = item.text            
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {

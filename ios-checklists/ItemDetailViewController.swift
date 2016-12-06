@@ -1,5 +1,5 @@
 //
-//  AddItemViewController.swift
+//  ItemDetailViewController.swift
 //  ios-checklists
 //
 //  Created by Chaofan Zhang on 11/24/16.
@@ -8,33 +8,33 @@
 
 import UIKit
 
-protocol AddItemViewControllerProtocol: class {
-    func addItemViewControllerDidCancel(_ controller: AddItemViewController)
-    func addItemViewController(_ controller: AddItemViewController, didFinishAdding item: ChecklistItem)
-    func addItemViewController(_ controller: AddItemViewController, didFinishEditing item: ChecklistItem)
+protocol ItemDetailViewControllerProtocol: class {
+    func itemDetailViewControllerDidCancel(_ controller: ItemDetailViewController)
+    func itemDetailViewController(_ controller: ItemDetailViewController, didFinishAdding item: ChecklistItem)
+    func itemDetailViewController(_ controller: ItemDetailViewController, didFinishEditing item: ChecklistItem)
 }
 
-class AddItemViewController : UITableViewController, UITextFieldDelegate {
+class ItemDetailViewController : UITableViewController, UITextFieldDelegate {
     
     @IBOutlet weak var doneBarButton: UIBarButtonItem!
     @IBOutlet weak var textField: UITextField!
     
-    weak var delegate: AddItemViewControllerProtocol?
+    weak var delegate: ItemDetailViewControllerProtocol?
     
     var itemToEdit: ChecklistItem?
     
 
     @IBAction func cancel() {
-        delegate?.addItemViewControllerDidCancel(self)
+        delegate?.itemDetailViewControllerDidCancel(self)
     }
     
     @IBAction func done() {
         print("text field: \(textField.text!)")
         if let editItem = itemToEdit {
             editItem.text = textField.text!
-            delegate?.addItemViewController(self, didFinishEditing: editItem)
+            delegate?.itemDetailViewController(self, didFinishEditing: editItem)
         } else {
-            delegate?.addItemViewController(self, didFinishAdding: ChecklistItem(text: textField.text!, checked: false))
+            delegate?.itemDetailViewController(self, didFinishAdding: ChecklistItem(text: textField.text!, checked: false))
         }
     }
     

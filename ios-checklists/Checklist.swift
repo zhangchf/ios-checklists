@@ -11,9 +11,11 @@ import UIKit
 class Checklist: NSObject, NSCoding {
     var name = ""
     var items = [ChecklistItem]()
+    var iconName = ""
     
     init(name: String) {
         self.name = name
+        self.iconName = "No Icon"
     }
     
     required init?(coder aDecoder: NSCoder) {

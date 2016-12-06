@@ -77,7 +77,7 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerPro
             detailText = "\(list.uncheckedItemCount()) remaining"
         }
         cell.detailTextLabel?.text = detailText
-        
+        cell.imageView?.image = UIImage(named: list.iconName)
         return cell
     }
     

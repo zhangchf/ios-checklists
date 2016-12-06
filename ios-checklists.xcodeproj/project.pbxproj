@@ -18,6 +18,7 @@
 		F2A081921DE6941E002D9F16 /* ChecklistItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A081911DE6941E002D9F16 /* ChecklistItem.swift */; };
 		F2A081941DE6DBFF002D9F16 /* ItemDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A081931DE6DBFF002D9F16 /* ItemDetailViewController.swift */; };
 		F2C7D1DC1DF6574D002DBA0E /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2C7D1DB1DF6574D002DBA0E /* DataModel.swift */; };
+		F2C7D1DE1DF6B4AF002DBA0E /* IconPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2C7D1DD1DF6B4AF002DBA0E /* IconPickerViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +35,7 @@
 		F2A081911DE6941E002D9F16 /* ChecklistItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChecklistItem.swift; sourceTree = "<group>"; };
 		F2A081931DE6DBFF002D9F16 /* ItemDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = ItemDetailViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		F2C7D1DB1DF6574D002DBA0E /* DataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataModel.swift; sourceTree = "<group>"; };
+		F2C7D1DD1DF6B4AF002DBA0E /* IconPickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IconPickerViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +79,7 @@
 				F222FDAA1DED236700CABEBE /* AllListsViewController.swift */,
 				F222FDAC1DED34E800CABEBE /* Checklist.swift */,
 				F222FDAE1DED5F8C00CABEBE /* ListDetailViewController.swift */,
+				F2C7D1DD1DF6B4AF002DBA0E /* IconPickerViewController.swift */,
 				F2C7D1DB1DF6574D002DBA0E /* DataModel.swift */,
 			);
 			path = "ios-checklists";
@@ -157,6 +160,7 @@
 				F2A081821DE42B87002D9F16 /* ChecklistViewController.swift in Sources */,
 				F222FDAF1DED5F8C00CABEBE /* ListDetailViewController.swift in Sources */,
 				F2A081941DE6DBFF002D9F16 /* ItemDetailViewController.swift in Sources */,
+				F2C7D1DE1DF6B4AF002DBA0E /* IconPickerViewController.swift in Sources */,
 				F222FDAD1DED34E800CABEBE /* Checklist.swift in Sources */,
 				F2A081921DE6941E002D9F16 /* ChecklistItem.swift in Sources */,
 				F2C7D1DC1DF6574D002DBA0E /* DataModel.swift in Sources */,

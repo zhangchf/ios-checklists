@@ -8,18 +8,39 @@
 
 import UIKit
 
-class AllListsViewController: UITableViewController, ListDetailViewControllerProtocol {
+class AllListsViewController: UITableViewController, ListDetailViewControllerProtocol, UINavigationControllerDelegate {
     
     var dataModel: DataModel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        print("viewDidLoad")
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        print("viewWillAppear")
+        tableView.reloadData()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        print("viewDidAppear")
+        navigationController?.delegate = self
+
+        let index = dataModel.indexOfSelectedChecklist
+        print("checklist selected index: \(index)")
+        if index >= 0 && index < dataModel.checkLists.count {
+            let checklist = dataModel.checkLists[index]
+            performSegue(withIdentifier: "ShowChecklist", sender: checklist)
+        }
+
     }
 
     override func didReceiveMemoryWarning() {
@@ -45,11 +66,25 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerPro
         
         let list = dataModel.checkLists[indexPath.row]
         cell.textLabel?.text = list.name
+        
+        let uncheckedCount = list.uncheckedItemCount()
+        var detailText = ""
+        if list.items.count == 0 {
+            detailText = "(No Items)"
+        } else if uncheckedCount == 0 {
+            detailText = "All Done"
+        } else {
+            detailText = "\(list.uncheckedItemCount()) remaining"
+        }
+        cell.detailTextLabel?.text = detailText
+        
         return cell
     }
     
     //MARK: - Table view delegate
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        dataModel.indexOfSelectedChecklist = indexPath.row
+        
         let checklist = dataModel.checkLists[indexPath.row]
         performSegue(withIdentifier: "ShowChecklist", sender: checklist)
     }
@@ -76,7 +111,7 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerPro
         if let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier) {
             return cell
         } else {
-            return UITableViewCell(style: .default, reuseIdentifier: cellIdentifier)
+            return UITableViewCell(style: .subtitle, reuseIdentifier: cellIdentifier)
         }
     }
     
@@ -87,16 +122,20 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerPro
     
     func listDetailViewController(_ controller: ListDetailViewController, didFinishAdding checklist: Checklist) {
         dataModel.checkLists.append(checklist)
-        tableView.insertRows(at: [IndexPath(row: dataModel.checkLists.count - 1, section: 0)], with: .automatic)
+//        tableView.insertRows(at: [IndexPath(row: dataModel.checkLists.count - 1, section: 0)], with: .automatic)
         
+        sortChecklists()
+        tableView.reloadData()
         dismiss(animated: true, completion: nil)
     }
     
     func listDetailViewController(_ controller: ListDetailViewController, didFinishEditing checklist: Checklist) {
-        if let row = dataModel.checkLists.index(of: checklist) {
-            let cell = tableView.cellForRow(at: IndexPath(row: row, section: 0))
-            cell?.textLabel?.text = checklist.name
-        }
+//        if let row = dataModel.checkLists.index(of: checklist) {
+//            let cell = tableView.cellForRow(at: IndexPath(row: row, section: 0))
+//            cell?.textLabel?.text = checklist.name
+//        }
+        sortChecklists()
+        tableView.reloadData()
         dismiss(animated: true, completion: nil)
     }
     
@@ -111,6 +150,19 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerPro
             listDetailController.delegate = self
             listDetailController.checklistToEdit = nil
         }
+    }
+    
+    //MARK: - UINavigationControllerDelegate
+    func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
+        print("willShow \(viewController)")
+        if viewController === self {
+            dataModel.indexOfSelectedChecklist = -1
+        }
+    }
+    
+    func sortChecklists() {
+        dataModel.checkLists.sort(by: {checklist1, checklist2 in
+            return checklist1.name.localizedStandardCompare(checklist2.name) == ComparisonResult.orderedAscending})
     }
 
     

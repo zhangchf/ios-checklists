@@ -9,7 +9,9 @@
 import UIKit
 
 class ChecklistViewController: UITableViewController, ItemDetailViewControllerProtocol {
-    
+    let TAG_LABEL = 1000
+    let TAG_CHECK_MARK = 1001
+    let TAG_DUE_DATE = 1002
     
     var checklist: Checklist!
 
@@ -54,7 +56,7 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerPr
     
     // MARK: private methods
     func configureCheckmark(for cell: UITableViewCell, with item: ChecklistItem) {
-        let checkLabel = cell.viewWithTag(1001) as! UILabel
+        let checkLabel = cell.viewWithTag(TAG_CHECK_MARK) as! UILabel
         checkLabel.textColor = view.tintColor
         
         if item.checked {
@@ -65,8 +67,13 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerPr
     }
     
     func configureText(for cell: UITableViewCell, with item: ChecklistItem) {
-        let label = cell.viewWithTag(1000) as! UILabel
+        let label = cell.viewWithTag(TAG_LABEL) as! UILabel
         label.text = item.text
+        let dueDate = cell.viewWithTag(TAG_DUE_DATE) as! UILabel
+        let formatter = DateFormatter()
+        formatter.dateStyle = .medium
+        formatter.timeStyle = .short
+        dueDate.text = formatter.string(from: item.dueDate)
     }
     
     //MARK: - ItemDetailViewControllerProtocol
@@ -75,20 +82,24 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerPr
     }
     
     func itemDetailViewController(_ controller: ItemDetailViewController, didFinishAdding item: ChecklistItem) {
-        let newItemIndex = checklist.items.count
         checklist.items.append(item)
-        let indexPath = IndexPath(item: newItemIndex, section: 0)
-        tableView.insertRows(at: [indexPath], with: .automatic)
+//        let newItemIndex = checklist.items.count
+//        let indexPath = IndexPath(item: newItemIndex, section: 0)
+//        tableView.insertRows(at: [indexPath], with: .automatic)
+        sortChecklistItems()
+        tableView.reloadData()
         dismiss(animated: true, completion: nil)
     }
     
     func itemDetailViewController(_ controller: ItemDetailViewController, didFinishEditing item: ChecklistItem) {
-        if let index = checklist.items.index(of: item) {
-            let indexPath = IndexPath(row: index, section: 0)
-            if let cell = tableView.cellForRow(at: indexPath) {
-                configureText(for: cell, with: item)
-            }
-        }
+//        if let index = checklist.items.index(of: item) {
+//            let indexPath = IndexPath(row: index, section: 0)
+//            if let cell = tableView.cellForRow(at: indexPath) {
+//                configureText(for: cell, with: item)
+//            }
+//        }
+        sortChecklistItems()
+        tableView.reloadData()
         dismiss(animated: true, completion: nil)
     }
     
@@ -105,6 +116,13 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerPr
                 controller.itemToEdit = checklist.items[indexPath.row]
             }
             controller.delegate = self
+        }
+    }
+    
+    func sortChecklistItems() {
+        checklist.items.sort() {
+            item1, item2 in
+            return item1.dueDate.compare(item2.dueDate) == .orderedAscending
         }
     }
     

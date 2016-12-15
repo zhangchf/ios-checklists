@@ -264,7 +264,7 @@
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                                     <connections>
                                                         <action selector="done" destination="JaP-7j-WHq" eventType="editingDidEndOnExit" id="fmY-mR-tng"/>
-                                                        <outlet property="delegate" destination="JaP-7j-WHq" id="7cc-HJ-DHH"/>
+                                                        <outlet property="delegate" destination="JaP-7j-WHq" id="4NP-HH-W3g"/>
                                                     </connections>
                                                 </textField>
                                             </subviews>
@@ -276,6 +276,62 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <accessibility key="accessibilityConfiguration" identifier="ChecklistItem"/>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection id="M3i-wL-CaN">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="Ezn-Vq-Dco">
+                                        <rect key="frame" x="0.0" y="115" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Ezn-Vq-Dco" id="fLO-dQ-xKv">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Remind Me" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gTs-bQ-XSN">
+                                                    <rect key="frame" x="15" y="11" width="101" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="ktO-Tv-xn0">
+                                                    <rect key="frame" x="309" y="6" width="51" height="31"/>
+                                                    <connections>
+                                                        <action selector="remindMeSwitchChanged:" destination="JaP-7j-WHq" eventType="valueChanged" id="uyj-h5-Nix"/>
+                                                    </connections>
+                                                </switch>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="ktO-Tv-xn0" firstAttribute="centerY" secondItem="fLO-dQ-xKv" secondAttribute="centerY" id="1Og-sT-1H8"/>
+                                                <constraint firstAttribute="trailing" secondItem="ktO-Tv-xn0" secondAttribute="trailing" constant="17" id="jkL-BN-I00"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <accessibility key="accessibilityConfiguration" identifier="ChecklistItem"/>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="0ze-SO-1Xd" detailTextLabel="4Nu-Om-6oJ" style="IBUITableViewCellStyleValue1" id="7eh-bg-cd9">
+                                        <rect key="frame" x="0.0" y="159" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="7eh-bg-cd9" id="TdN-t9-MNH">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Due Date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="0ze-SO-1Xd">
+                                                    <rect key="frame" x="15" y="12" width="71.5" height="20.5"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Choose a date" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="4Nu-Om-6oJ">
+                                                    <rect key="frame" x="249.5" y="12" width="110.5" height="20.5"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
@@ -298,13 +354,40 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="datePicker" destination="JMS-rs-fpn" id="qPg-zq-tNv"/>
+                        <outlet property="datePickerCell" destination="aiS-JX-P9a" id="rxA-IE-8Py"/>
                         <outlet property="doneBarButton" destination="FLv-wR-0FE" id="32X-BF-6HS"/>
+                        <outlet property="dueDateLabel" destination="4Nu-Om-6oJ" id="zpd-ic-X4a"/>
+                        <outlet property="remindMeSwitch" destination="ktO-Tv-xn0" id="xbD-xI-4wp"/>
                         <outlet property="textField" destination="KEY-Au-RYu" id="a0A-nC-eKH"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1hV-R1-5yz" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="aiS-JX-P9a">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="217"/>
+                    <autoresizingMask key="autoresizingMask"/>
+                    <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="aiS-JX-P9a" id="emk-T2-LzL">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="216"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="JMS-rs-fpn">
+                                <rect key="frame" x="28" y="0.5" width="320" height="216"/>
+                                <date key="date" timeIntervalSinceReferenceDate="503479862.61405498">
+                                    <!--2016-12-15 07:31:02 +0000-->
+                                </date>
+                                <connections>
+                                    <action selector="dateChanged:" destination="JaP-7j-WHq" eventType="valueChanged" id="1nt-tw-UFw"/>
+                                </connections>
+                            </datePicker>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="JMS-rs-fpn" firstAttribute="centerX" secondItem="emk-T2-LzL" secondAttribute="centerX" id="280-Mj-gBT"/>
+                            <constraint firstItem="JMS-rs-fpn" firstAttribute="centerY" secondItem="emk-T2-LzL" secondAttribute="centerY" id="N2v-oS-6fh"/>
+                        </constraints>
+                    </tableViewCellContentView>
+                </tableViewCell>
             </objects>
-            <point key="canvasLocation" x="2942" y="-54"/>
+            <point key="canvasLocation" x="2941.5999999999999" y="-54.422788605697157"/>
         </scene>
         <!--Checklists-->
         <scene sceneID="83C-eV-pba">

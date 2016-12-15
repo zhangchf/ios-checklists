@@ -11,26 +11,29 @@ import Foundation
 class DataModel {
     let KEY_CHECK_LIST_INDEX = "checklistIndex"
     let KEY_FIRST_TIME = "firstTime"
+    static let KEY_CHECK_LIST_ITEM_ID = "checklistItemId"
     
     var checkLists = [Checklist]()
     
+    let userDefaults = UserDefaults.standard
+    
     var indexOfSelectedChecklist: Int {
         get {
-            return UserDefaults.standard.integer(forKey: KEY_CHECK_LIST_INDEX)
+            return userDefaults.integer(forKey: KEY_CHECK_LIST_INDEX)
         }
         set {
-            UserDefaults.standard.set(newValue, forKey: KEY_CHECK_LIST_INDEX)
-            UserDefaults.standard.synchronize()
+            userDefaults.set(newValue, forKey: KEY_CHECK_LIST_INDEX)
+            userDefaults.synchronize()
             print("set checklist index to \(newValue)")
         }
     }
     
     var firstTime: Bool {
         get {
-            return UserDefaults.standard.bool(forKey: KEY_FIRST_TIME)
+            return userDefaults.bool(forKey: KEY_FIRST_TIME)
         }
         set {
-            UserDefaults.standard.set(newValue, forKey: KEY_FIRST_TIME)
+            userDefaults.set(newValue, forKey: KEY_FIRST_TIME)
         }
     }
     
@@ -69,8 +72,10 @@ class DataModel {
     }
     
     func registerDefaults() {
-        let defaultValues = [KEY_CHECK_LIST_INDEX: -1, KEY_FIRST_TIME: true] as [String : Any]
-        UserDefaults.standard.register(defaults: defaultValues)
+        let defaultValues = [KEY_CHECK_LIST_INDEX: -1,
+                             KEY_FIRST_TIME: true,
+                             DataModel.KEY_CHECK_LIST_ITEM_ID: 0] as [String : Any]
+        userDefaults.register(defaults: defaultValues)
     }
     
     func handleFirstTime() {
@@ -79,8 +84,14 @@ class DataModel {
             firstTime = false
             
             indexOfSelectedChecklist = 0
-            UserDefaults.standard.synchronize()
+            userDefaults.synchronize()
         }
+    }
+    
+    class func newChecklistItemId() -> Int {
+        let itemId = UserDefaults.standard.integer(forKey: KEY_CHECK_LIST_ITEM_ID)
+        UserDefaults.standard.set(itemId + 1, forKey: KEY_CHECK_LIST_ITEM_ID)
+        return itemId
     }
 
 
